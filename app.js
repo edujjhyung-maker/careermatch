@@ -5,68 +5,170 @@
  */
 
 // ── 교육과정 6대 핵심 역량 ──────────────────────────────────────────
-// ── 2022 교육과정 6대 핵심역량 (KEDI 학생역량 조사 기반 문항)
+// ── 2022 교육과정 6대 핵심역량 (KEDI 2019 학생역량 조사 원문 문항)
+// qs 항목: {q: 문항, r: true} → r:true 는 역방향 채점 (6-점수)
 const COMPS = [
   {
-    id: 'l', label: '협력적 소통 역량', color: '#1D9E75', idx: 0,
+    id: 'ac', label: '자기관리 역량', color: '#BA7517', idx: 0,
     qs: [
-      '친구의 기분을 이해하려고 노력한다.',
-      '친구들의 고민을 잘 들어 준다.',
-      '대화를 할 때 어떻게 말할지 미리 생각하고 말한다.',
-      '듣는 사람이 이해할 수 있도록 쉽고 정확한 말을 골라 이야기한다.',
-      '상대방의 표정과 몸짓을 살피면서 속마음을 이해한다.'
+      // Q4. 자기정체성
+      {q:'내가 좋아하는 것(일)이 무엇인지 안다.'},
+      {q:'내가 싫어하는 것(일)이 무엇인지 안다.'},
+      {q:'내가 관심 있어 하는 것(일)이 무엇인지 안다.'},
+      {q:'나의 장·단점이 무엇인지 안다.'},
+      {q:'나는 때때로 나 자신에 대해서 잘 모르겠다고 느낀다.', r:true},
+      {q:'나는 이 세상에 있으나마나 한 존재이다.', r:true},
+      {q:'나는 다른 사람이 하자는 대로 잘 이끌린다.', r:true},
+      {q:'나 자신에 대한 생각이 정리되어 있지 않다.', r:true},
+      {q:'나에게는 내 꿈을 이루고 싶은 강한 욕구가 없다.', r:true},
+      // Q5. 자기조절·목표설정
+      {q:'나의 능력보다 조금 어려운 목표를 세운다.'},
+      {q:'실제로 이를 수 있을지 생각하면서 목표를 세운다.'},
+      {q:'공부가 내 꿈을 이루는 것과 관련이 있는지 생각해 본다.'},
+      {q:'꿈을 이루기 위해 필요한 것은 스스로 공부해서 알아낸다.'},
+      {q:'해야 할 일이 많으면 순서를 정해서 하나씩 한다.'},
+      {q:'미리 계획을 잘 세워서 나중에 어려움을 겪지 않도록 한다.'},
+      {q:'해야 할 일에 집중할 수 있도록 주변을 미리 정리한다.'},
+      {q:'복잡한 일을 해야 할 때 여러 개로 나누어서 하나씩 해결한다.'},
+      {q:'나는 내가 무엇이든 잘 해낼 것이라고 믿는다.'},
+      {q:'나는 이 세상에서 하나뿐인 소중한 사람이라고 생각한다.'},
+      {q:'어려운 일이 생겨도 잘될 거라고 믿으며 열심히 한다.'},
+      {q:'열심히 노력하면 나의 실력이 향상될 것이라고 믿는다.'},
+      // Q6. 진로탐색
+      {q:'미래에 어떤 직업이 전망 있을 것인가를 생각해 본다.'},
+      {q:'원하는 직업(전공)을 갖기 위한 계획을 가지고 있다.'},
+      {q:'내 또래에 비해서 뚜렷한 진로 계획을 가지고 있다.'},
+      {q:'어른들의 결정보다는 내가 원하는 진로를 택할 것이다.'},
+      {q:'진로 선택은 어른들의 결정을 따르는 것이 좋다.', r:true},
+      {q:'나의 진로를 결정해 주는 사람이 있었으면 좋겠다.', r:true},
+      {q:'진로 선택을 할 때는 다른 사람들의 의견보다 내 생각이 중요하다.'},
+      {q:'부모님이 반대하시더라도 내가 원하는 진로를 선택할 것이다.'},
+      {q:'내가 관심 있는 직업(전공)에 대한 여러 가지 정보를 수집한다.'},
+      {q:'내가 관심 있는 직업(전공)에 대한 구체적인 정보를 알아본다.'},
+      {q:'내가 알고 있는 진로 지식이 정확한지 알아본다.'},
+      {q:'내가 관심 있는 진로에 대해 인터넷 검색을 한다.'},
+      {q:'나의 진로와 관련한 상담을 받는다.'},
+      {q:'관심 있는 직업을 가진 사람에게 관련 정보를 얻기 위해 연락한다.'},
     ]
   },
   {
     id: 'a', label: '지식정보처리 역량', color: '#185FA5', idx: 1,
     qs: [
-      '과제를 해결하는 데 도움이 될 만한 자료나 사람들을 잘 알고 있다.',
-      '여러 자료들 중에서 가장 도움이 되는 것을 먼저 살펴본다.',
-      '글을 그림으로 표현하거나 새롭고 쓸모 있는 자료들을 만든다.',
-      '컴퓨터와 인터넷을 활용하여 다양한 정보를 얻을 수 있다.',
-      '컴퓨터 프로그램을 이용해서 문서·그림·동영상 등을 만들거나 편집할 수 있다.'
+      // Q7. 지식정보처리
+      {q:'과제를 해결하는 데 도움이 될 만한 자료나 사람들을 잘 알고 있다.'},
+      {q:'여러 자료들 중에서 가장 도움이 되는 것을 먼저 살펴본다.'},
+      {q:'필요할 때 손쉽게 찾을 수 있도록 자료를 정리해 둔다.'},
+      {q:'자료들을 사용하기 쉽게 내 방식대로 모양이나 순서를 바꾼다.'},
+      {q:'글을 그림으로 표현하거나 그림을 글로 설명하는 식으로 새롭고 쓸모 있는 자료들을 만든다.'},
+      {q:'컴퓨터와 인터넷을 활용하여 다양한 정보를 얻을 수 있다.'},
+      {q:'컴퓨터나 인터넷 상의 다양한 자료를 활용하여 학습할 수 있다.'},
+      {q:'내가 가지고 있는 정보를 SNS나 블로그 등을 통해 공유할 수 있다.'},
+      {q:'컴퓨터 프로그램을 이용해서 문서·그림·동영상 등을 만들거나 편집할 수 있다.'},
     ]
   },
   {
-    id: 'ac', label: '자기관리 역량', color: '#BA7517', idx: 2,
+    id: 'i', label: '창의적 사고 역량', color: '#534AB7', idx: 2,
     qs: [
-      '내가 좋아하는 것과 싫어하는 것이 무엇인지 안다.',
-      '나의 능력보다 조금 어려운 목표를 세우고 도전한다.',
-      '미리 계획을 잘 세워서 나중에 어려움을 겪지 않도록 한다.',
-      '원하는 직업(전공)을 갖기 위한 계획을 가지고 있다.',
-      '내가 관심 있는 직업(전공)에 대한 구체적인 정보를 알아본다.'
+      // Q8. 창의적 사고
+      {q:'다른 친구들이 생각하지 못하는 새로운 생각을 잘한다.'},
+      {q:'새로운 문제를 풀 때 도움이 될 만한 내용을 잘 떠올린다.'},
+      {q:'부분적인 내용만 듣고도 전체 내용을 상상할 수 있다.'},
+      {q:'서로 관련없어 보이는 내용들도 잘 연결지어 생각한다.'},
+      {q:'짧은 시간 안에 여러 가지 새로운 생각을 할 수 있다.'},
+      {q:'어울릴 것 같지 않은 것들을 결합해서 새로운 것을 만드는 것을 좋아한다.'},
+      {q:'종종 주변에 있는 것들을 사용해서 생활에 도움이 되는 것을 만들어 본다.'},
+      {q:'때때로 물건을 본래의 용도와 다르게 사용하기도 한다.'},
+      {q:'남들이 생각해내지 못하는 기발하고 특이한 발상을 한다.'},
+      {q:'하나의 사물이나 현상을 보고 여러 가지 생각을 떠올린다.'},
+      {q:'항상 새로운 것을 알려고 한다.'},
+      {q:'위험해 보이더라도 궁금한 것은 해본다.'},
+      {q:'새로운 것을 해보는 것이 재미있다.'},
+      {q:'남들이 포기한 일일수록 해결해 보고 싶은 마음이 강해진다.'},
+      {q:'친구들에 비해 관심 분야가 다양하다.'},
+      {q:'잘 모르는 것이 있으면 그것에 대해 알고 싶다.'},
+      {q:'수업시간에 궁금한 것은 꼭 질문을 한다.'},
+      {q:'잘 모르는 것에 대한 해답을 찾아가는 것이 즐겁다.'},
+      {q:'풀리지 않는 문제는 몇 시간이고 계속해서 해결될 때까지 매달린다.'},
+      {q:'조금 어려운 문제에 부딪혀도 괴롭다는 생각이 들지 않는다.'},
     ]
   },
   {
-    id: 'r', label: '공동체 역량', color: '#D85A30', idx: 3,
+    id: 're', label: '심미적 감성 역량', color: '#888780', idx: 3,
     qs: [
-      '학급이나 학교에서 일어나는 일들에 관심을 가진다.',
-      '과제를 함께 할 때 내가 맡은 일이 마음에 들지 않더라도 최선을 다한다.',
-      '정해진 공동의 규칙이 내 생각과 다르더라도 준수한다.',
-      '봉사활동에 적극적으로 참여한다.',
-      '환경오염을 막기 위해 세계의 모든 나라들이 협력해야 한다고 생각한다.'
+      // Q9. 독서·예술·스포츠
+      {q:'독서는 내가 좋아하는 취미 중 하나이다.'},
+      {q:'다른 사람과 책에 대해 이야기 하는 것을 좋아한다.'},
+      {q:'서점이나 도서관에 가는 것을 좋아한다.'},
+      {q:'책을 선물로 받을 때 기쁘다.'},
+      {q:'한 번 읽기 시작한 책은 끝까지 읽는다.'},
+      {q:'예술(음악, 미술, 영화, 연극 등) 관람 및 활동은 내가 좋아하는 취미 중 하나이다.'},
+      {q:'다른 사람과 예술(음악, 미술, 영화, 연극 등)에 대해 이야기 하는 것을 좋아한다.'},
+      {q:'예술 관람(음악회, 콘서트, 미술전시회, 영화관람, 연극공연 등)을 좋아한다.'},
+      {q:'예술 활동(노래, 악기연주, 만들기, 그림그리기, 영화제작 등)을 좋아한다.'},
+      {q:'스포츠는 내가 좋아하는 취미 중 하나이다.'},
+      {q:'다른 사람과 스포츠에 대해 이야기 하는 것을 좋아한다.'},
+      {q:'스포츠 경기 관람을 좋아한다.'},
+      {q:'가벼운 운동이나 각종 경기에 참여하는 것을 좋아한다.'},
+      // Q10. 다문화 감수성
+      {q:'한국에 사는 외국사람들도 우리나라 사람들과 똑같은 대우를 받아야 한다.'},
+      {q:'우리나라에 살기 위해 온 외국사람들의 전통이나 생활습관도 존중해야 한다.'},
+      {q:'외국이주민이나 다문화가정이 늘어나면 우리나라 문화가 더욱 다양해질 것이라고 믿는다.'},
+      {q:'인종에 상관없이 누구나 학급임원(회장, 부회장)이 될 수 있다고 생각한다.'},
+      {q:'인종이 다르더라도 한국에서 태어나고 자랐으면 우리와 같은 한국 사람이라고 생각한다.'},
+      {q:'우리 학교나 학급에 다문화가정의 아이가 있다면 다른 친구들과 똑같은 친구로 대하겠다.'},
+      {q:'다문화가정의 아이가 자기 집에 와서 놀자고 하면 그렇게 하겠다.'},
+      {q:'기회가 있다면 상대방의 인종·국적·문화권에 상관없이 기꺼이 친구를 사귀겠다.'},
+      {q:'내 생일에 친구들을 집에 초대하게 된다면 다문화가정의 아이도 함께 초대하고 싶다.'},
     ]
   },
   {
-    id: 'i', label: '창의적 사고 역량', color: '#534AB7', idx: 4,
+    id: 'l', label: '협력적 소통 역량', color: '#1D9E75', idx: 4,
     qs: [
-      '다른 친구들이 생각하지 못하는 새로운 생각을 잘한다.',
-      '서로 관련없어 보이는 내용들도 잘 연결지어 생각한다.',
-      '항상 새로운 것을 알려고 한다.',
-      '잘 모르는 것이 있으면 그것에 대해 알고 싶다.',
-      '풀리지 않는 문제는 해결될 때까지 끈기 있게 매달린다.'
+      // Q11. 의사소통
+      {q:'친구의 기분을 이해하려고 노력한다.'},
+      {q:'친구의 마음(생각과 감정)을 잘 알 수 있다.'},
+      {q:'친구들의 고민을 잘 들어 준다.'},
+      {q:'친구가 선생님께 칭찬을 받으면 나도 기분이 좋아진다.'},
+      {q:'친구가 기분이 나쁘면 나도 기분이 나빠진다.'},
+      {q:'대화를 할 때 어떻게 말할지 미리 생각하고 말한다.'},
+      {q:'듣는 사람이 이해할 수 있도록 쉽고 정확한 말을 골라 이야기한다.'},
+      {q:'듣는 사람이 잘 이해할 수 있도록 예를 들어 설명한다.'},
+      {q:'상대방의 표정과 몸짓을 살피면서 속마음을 이해한다.'},
+      {q:'대화할 때 이야기를 잘 듣고 있다는 것을 말이나 몸짓으로 보여준다.'},
     ]
   },
   {
-    id: 're', label: '심미적 감성 역량', color: '#888780', idx: 5,
+    id: 'r', label: '공동체 역량', color: '#D85A30', idx: 5,
     qs: [
-      '예술(음악, 미술, 영화, 연극 등) 관람 및 활동을 좋아한다.',
-      '예술 관람(음악회, 전시회, 영화, 연극 공연 등)을 즐긴다.',
-      '한국에 사는 외국사람들도 우리나라 사람들과 똑같은 대우를 받아야 한다.',
-      '다른 문화권 사람들의 전통이나 생활습관도 존중해야 한다.',
-      '외국이주민이나 다문화가정이 늘어나면 우리나라 문화가 더욱 다양해질 것이라고 믿는다.'
+      // Q12. 공동체·시민의식
+      {q:'학급이나 학교에서 일어나는 일들에 관심을 가진다.'},
+      {q:'학급이나 학교에서 일어난 일에 대한 내 생각을 말이나 글로 표현한다.'},
+      {q:'학급이나 학교에서 일어난 일은 무엇이든 나와 관련이 있다고 생각하고 해결하기 위해 노력한다.'},
+      {q:'잘못된 일에 대해서는 다른 사람들이 가만히 있더라도 내 생각을 당당하게 이야기한다.'},
+      {q:'과제를 함께 하면서 내가 맡은 일이 마음에 들지 않더라도 최선을 다한다.'},
+      {q:'과제를 함께 하는 친구들이 힘들어할 때 힘이 나도록 응원한다.'},
+      {q:'과제를 함께 하는 과정에서 친구들과 좀 더 친해지려고 노력한다.'},
+      {q:'여럿이 과제를 하다가 다투더라도 양보하며 끝까지 마무리한다.'},
+      {q:'과제를 함께 하는 친구들끼리 다투면 서로 화해하도록 나서서 돕는다.'},
+      {q:'정해진 공동의 규칙이 내 생각과 다르더라도 준수한다.'},
+      {q:'보는 사람이 없어도 규칙을 지킨다.'},
+      {q:'공공시설을 이용할 때 급한 일이 있더라도 차례를 지킨다.'},
+      {q:'남들이 질서를 지키지 않더라도 나는 질서를 지킨다.'},
+      {q:'봉사활동에 적극적으로 참여한다.'},
+      {q:'봉사활동을 하면 기분이 좋아진다.'},
+      {q:'봉사활동은 내가 원해서 하는 편이다.'},
+      {q:'어른이 되어서도 봉사활동을 할 것이다.'},
+      // Q13. 세계시민의식
+      {q:'다른 나라 사람이기보다는 대한민국 국민이고 싶다.'},
+      {q:'현재의 대한민국에 대해 자랑스럽게 느낀다.'},
+      {q:'한국 선수들이 국제대회에서 잘할 때면 대한민국 국민인 것이 자랑스럽다.'},
+      {q:'남극의 빙하가 사라지고 있는 것은 나에게도 심각한 문제이다.'},
+      {q:'먹을 것이 없어 굶어 죽어가고 있는 다른 나라의 어린이들을 생각하면 마음이 아프다.'},
+      {q:'세계평화에 기여할 수 있는 일이라면 적극 참여하겠다.'},
+      {q:'환경오염을 막기 위해서 세계의 모든 나라들이 협력해야 한다고 생각한다.'},
+      {q:'어려운 처지에 있는 다른 나라를 위해서 봉사활동을 할 생각이 있다.'},
     ]
-  }
+  },
 ];
 
 // ── 꿈길 연계 체험 프로그램 (API 연동 전 기본 샘플) ────────────────
@@ -107,16 +209,21 @@ let dropIdx = -1;
 
 // API 키 설정 (발급 후 여기에 입력)
 const API_CONFIG = {
-  ggoomgil: '',      // 꿈길 API 키 (data.go.kr 발급)
-  careernet: '',     // 커리어넷 API 키 (career.go.kr 발급)
+  ggoomgil: '',
+  careernet: '9a1be1e329e68eda99343906354a28e8',
 };
 
 // ── 유틸 함수 ────────────────────────────────────────────────────────
 const $ = (id) => document.getElementById(id);
 const calcComp = (id) => {
   const comp = COMPS.find(c => c.id === id);
-  const vals = comp.qs.map((_, i) => answers[`${id}_${i}`] || 0);
-  return +(vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(2);
+  const vals = comp.qs.map((q, i) => {
+    const raw = answers[`${id}_${i}`] || 0;
+    return (q.r && raw > 0) ? (6 - raw) : raw;  // 역방향 문항 자동 변환
+  });
+  const nonZero = vals.filter(v => v > 0);
+  if (!nonZero.length) return 0;
+  return +(nonZero.reduce((a, b) => a + b, 0) / nonZero.length).toFixed(2);
 };
 const calcAllScores = () => {
   const s = {};
@@ -186,8 +293,12 @@ function renderQuestions() {
           aria-label="${v}점">${v}</button>`
       ).join('');
 
+      const qText = typeof q === 'object' ? q.q : q;
+      const reverseTag = (typeof q === 'object' && q.r)
+        ? `<span class="q-reverse-tag">역방향</span>` : '';
+
       item.innerHTML = `
-        <div class="q-text"><span class="q-num">${qNum}.</span>${q}</div>
+        <div class="q-text"><span class="q-num">${qNum}.</span>${qText}${reverseTag}</div>
         <div class="rating-row">
           <span class="rating-label">매우 낮음</span>
           <div class="stars">${stars}</div>
@@ -213,10 +324,16 @@ function setAnswer(key, val) {
 
 // ── 검사 제출 ────────────────────────────────────────────────────────
 function submitTest() {
-  const missing = COMPS.some(c => c.qs.some((_, i) => !answers[`${c.id}_${i}`]));
-  if (missing) {
+  const totalQ = COMPS.reduce((s, c) => s + c.qs.length, 0);
+  const answered = Object.keys(answers).length;
+  // 50% 미만 응답 시 경고
+  if (answered < Math.floor(totalQ * 0.5)) {
     const err = $('error-msg');
-    if (err) { err.classList.add('show'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    if (err) {
+      err.innerHTML = `⚠️ 현재 ${answered}/${totalQ}문항 응답했습니다. 최소 ${Math.floor(totalQ*0.5)}문항 이상 응답해주세요.`;
+      err.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     return;
   }
   $('error-msg')?.classList.remove('show');
@@ -626,7 +743,6 @@ document.addEventListener('DOMContentLoaded', () => {
 const CAREERNET_KEY = API_CONFIG.careernet;
 
 async function openJobModal(jobName) {
-  // 모달 생성
   const existing = document.getElementById('job-modal');
   if (existing) existing.remove();
 
@@ -642,35 +758,74 @@ async function openJobModal(jobName) {
       <div class="modal-body" id="modal-body">
         <div class="modal-loading">
           <div class="modal-spinner"></div>
-          <span>커리어넷에서 직업 정보를 불러오는 중...</span>
+          <span>직업 정보를 불러오는 중...</span>
         </div>
       </div>
     </div>`;
   document.body.appendChild(modal);
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
 
-  if (!CAREERNET_KEY) {
-    renderModalFallback(jobName);
-    return;
+  // 1차: 커리어넷 API 시도
+  if (CAREERNET_KEY) {
+    try {
+      const [encycRes, infoRes] = await Promise.allSettled([
+        fetchCareernetEncy(jobName),
+        fetchCareernetInfo(jobName)
+      ]);
+      const encycData = encycRes.status === 'fulfilled' ? encycRes.value : null;
+      const infoData  = infoRes.status  === 'fulfilled' ? infoRes.value  : null;
+      if (encycData || infoData) {
+        renderModalContent(jobName, encycData, infoData);
+        return;
+      }
+    } catch(e) {
+      console.warn('CareerNet API 실패, Claude AI로 전환:', e);
+    }
   }
 
+  // 2차: Claude AI로 직업 정보 생성
+  await fetchJobInfoFromClaude(jobName);
+}
+
+// Claude AI로 직업 정보 가져오기 (CORS 우회)
+async function fetchJobInfoFromClaude(jobName) {
+  const body = document.getElementById('modal-body');
+  if (!body) return;
+  body.innerHTML = `<div class="modal-loading"><div class="modal-spinner"></div><span>AI로 직업 정보 생성 중...</span></div>`;
+
   try {
-    // 직업백과 + 직업정보 동시 호출
-    const [encycRes, infoRes] = await Promise.allSettled([
-      fetchCareernetEncy(jobName),
-      fetchCareernetInfo(jobName)
-    ]);
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `"${jobName}"에 대해 다음 항목을 JSON으로 답해줘. 반드시 JSON만, 설명 없이:
+{"desc":"직업 한 줄 설명","work":"하는 일 2-3문장","edu":"필요한 교육·자격","salary":"평균 연봉 수준","outlook":"고용 전망","relate":"관련 직업 3-5개(쉼표 구분)"}`
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    const clean = text.replace(/```json|```/g, '').trim();
+    const info = JSON.parse(clean);
 
-    const encycData = encycRes.status === 'fulfilled' ? encycRes.value : null;
-    const infoData  = infoRes.status  === 'fulfilled' ? infoRes.value  : null;
-
-    if (!encycData && !infoData) {
-      renderModalFallback(jobName);
-      return;
-    }
-    renderModalContent(jobName, encycData, infoData);
-  } catch (e) {
-    console.warn('CareerNet API 오류:', e);
+    body.innerHTML = `
+      <div class="modal-ai-badge">🤖 AI 생성 정보</div>
+      <div class="modal-section"><div class="modal-tag">📋 직업 설명</div><p class="modal-text">${info.desc || ''}</p></div>
+      <div class="modal-section"><div class="modal-tag">💼 하는 일</div><p class="modal-text">${info.work || ''}</p></div>
+      <div class="modal-section"><div class="modal-tag">🎓 필요 교육·자격</div><p class="modal-text">${info.edu || ''}</p></div>
+      <div class="modal-section"><div class="modal-tag">💰 임금 정보</div><p class="modal-text">${info.salary || ''}</p></div>
+      <div class="modal-section"><div class="modal-tag">📈 고용 전망</div><p class="modal-text">${info.outlook || ''}</p></div>
+      <div class="modal-section"><div class="modal-tag">🔗 관련 직업</div><p class="modal-text">${info.relate || ''}</p></div>
+      <div class="modal-footer">
+        <a href="https://www.career.go.kr/cnet/front/web/job/catJobView.do?SEQ=0&jobGbn=job&keyword=${encodeURIComponent(jobName)}"
+           target="_blank" rel="noopener" class="modal-link-btn">커리어넷에서 자세히 보기 →</a>
+      </div>`;
+  } catch(e) {
+    console.warn('Claude API 실패:', e);
     renderModalFallback(jobName);
   }
 }
