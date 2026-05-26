@@ -282,7 +282,9 @@ function renderQuestions() {
 
     comp.qs.forEach((q, qi) => {
       const key = `${comp.id}_${qi}`;
-      const qNum = ci * 5 + qi + 1;
+      // 전체 연속 번호 (1~123)
+      const offset = COMPS.slice(0, ci).reduce((sum, c) => sum + c.qs.length, 0);
+      const qNum = offset + qi + 1;
       const item = document.createElement('div');
       item.className = 'q-item';
 
