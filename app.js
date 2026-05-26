@@ -161,6 +161,8 @@ const COMPS = [
       // Q13. 세계시민의식
       {q:'다른 나라 사람이기보다는 대한민국 국민이고 싶다.'},
       {q:'현재의 대한민국에 대해 자랑스럽게 느낀다.'},
+      {q:'다른 나라 사람이 한국 사람만 같다면 세계는 더 좋아질 것이라고 생각한다.'},
+      {q:'한국은 다른 나라보다 더 좋은 나라이다.'},
       {q:'한국 선수들이 국제대회에서 잘할 때면 대한민국 국민인 것이 자랑스럽다.'},
       {q:'남극의 빙하가 사라지고 있는 것은 나에게도 심각한 문제이다.'},
       {q:'먹을 것이 없어 굶어 죽어가고 있는 다른 나라의 어린이들을 생각하면 마음이 아프다.'},
@@ -744,92 +746,66 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── CareerNet API 직업 상세 팝업 ─────────────────────────────────────
 const CAREERNET_KEY = API_CONFIG.careernet;
 
-async function openJobModal(jobName) {
+function openJobModal(jobName) {
   const existing = document.getElementById('job-modal');
   if (existing) existing.remove();
+
+  // KNOW 데이터에서 해당 직업 역량 프로파일 찾기
+  const jobData = JOBS.find(j => j.n === jobName);
 
   const modal = document.createElement('div');
   modal.id = 'job-modal';
   modal.className = 'modal-overlay';
+
+  // 역량 프로파일 바 생성
+  const compLabels = ['리더십', '분석적사고', '성취/노력', '책임성·진취성', '혁신', '신뢰성'];
+  const compColors = ['#1D9E75','#185FA5','#BA7517','#D85A30','#534AB7','#888780'];
+  let profileHtml = '';
+  if (jobData) {
+    profileHtml = `
+      <div class="modal-section">
+        <div class="modal-tag">📊 KNOW 재직자 역량 프로파일</div>
+        <div class="modal-profile">
+          ${jobData.s.map((v, i) => `
+            <div class="mp-row">
+              <span class="mp-label">${compLabels[i]}</span>
+              <div class="mp-bar-wrap">
+                <div class="mp-bar" style="width:${Math.round(v/5*100)}%;background:${compColors[i]}"></div>
+              </div>
+              <span class="mp-val">${v.toFixed(1)}</span>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
   modal.innerHTML = `
     <div class="modal-box">
       <div class="modal-header">
         <span class="modal-title">${jobName}</span>
         <button class="modal-close" onclick="document.getElementById('job-modal').remove()">✕</button>
       </div>
-      <div class="modal-body" id="modal-body">
-        <div class="modal-loading">
-          <div class="modal-spinner"></div>
-          <span>직업 정보를 불러오는 중...</span>
+      <div class="modal-body">
+        ${profileHtml}
+        <div class="modal-section">
+          <div class="modal-tag">🔍 커리어넷 직업 정보</div>
+          <p class="modal-text" style="color:var(--text-secondary)">
+            하는 일, 필요 교육·자격, 임금, 전망 등 상세 정보는 커리어넷에서 확인할 수 있어요.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <a href="https://www.career.go.kr/cnet/front/web/job/catJobView.do?SEQ=0&jobGbn=job&keyword=${encodeURIComponent(jobName)}"
+             target="_blank" rel="noopener" class="modal-link-btn" style="margin-right:8px">
+            커리어넷 직업 정보 →
+          </a>
+          <a href="https://www.career.go.kr/cnet/front/web/job/catJobView.do?SEQ=0&jobGbn=job&keyword=${encodeURIComponent(jobName)}"
+             target="_blank" rel="noopener" class="modal-link-btn" style="background:var(--blue)">
+            직업백과 검색 →
+          </a>
         </div>
       </div>
     </div>`;
   document.body.appendChild(modal);
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
-
-  // 1차: 커리어넷 API 시도
-  if (CAREERNET_KEY) {
-    try {
-      const [encycRes, infoRes] = await Promise.allSettled([
-        fetchCareernetEncy(jobName),
-        fetchCareernetInfo(jobName)
-      ]);
-      const encycData = encycRes.status === 'fulfilled' ? encycRes.value : null;
-      const infoData  = infoRes.status  === 'fulfilled' ? infoRes.value  : null;
-      if (encycData || infoData) {
-        renderModalContent(jobName, encycData, infoData);
-        return;
-      }
-    } catch(e) {
-      console.warn('CareerNet API 실패, Claude AI로 전환:', e);
-    }
-  }
-
-  // 2차: Claude AI로 직업 정보 생성
-  await fetchJobInfoFromClaude(jobName);
-}
-
-// Claude AI로 직업 정보 가져오기 (CORS 우회)
-async function fetchJobInfoFromClaude(jobName) {
-  const body = document.getElementById('modal-body');
-  if (!body) return;
-  body.innerHTML = `<div class="modal-loading"><div class="modal-spinner"></div><span>AI로 직업 정보 생성 중...</span></div>`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: `"${jobName}"에 대해 다음 항목을 JSON으로 답해줘. 반드시 JSON만, 설명 없이:
-{"desc":"직업 한 줄 설명","work":"하는 일 2-3문장","edu":"필요한 교육·자격","salary":"평균 연봉 수준","outlook":"고용 전망","relate":"관련 직업 3-5개(쉼표 구분)"}`
-        }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || '';
-    const clean = text.replace(/```json|```/g, '').trim();
-    const info = JSON.parse(clean);
-
-    body.innerHTML = `
-      <div class="modal-ai-badge">🤖 AI 생성 정보</div>
-      <div class="modal-section"><div class="modal-tag">📋 직업 설명</div><p class="modal-text">${info.desc || ''}</p></div>
-      <div class="modal-section"><div class="modal-tag">💼 하는 일</div><p class="modal-text">${info.work || ''}</p></div>
-      <div class="modal-section"><div class="modal-tag">🎓 필요 교육·자격</div><p class="modal-text">${info.edu || ''}</p></div>
-      <div class="modal-section"><div class="modal-tag">💰 임금 정보</div><p class="modal-text">${info.salary || ''}</p></div>
-      <div class="modal-section"><div class="modal-tag">📈 고용 전망</div><p class="modal-text">${info.outlook || ''}</p></div>
-      <div class="modal-section"><div class="modal-tag">🔗 관련 직업</div><p class="modal-text">${info.relate || ''}</p></div>
-      <div class="modal-footer">
-        <a href="https://www.career.go.kr/cnet/front/web/job/catJobView.do?SEQ=0&jobGbn=job&keyword=${encodeURIComponent(jobName)}"
-           target="_blank" rel="noopener" class="modal-link-btn">커리어넷에서 자세히 보기 →</a>
-      </div>`;
-  } catch(e) {
-    console.warn('Claude API 실패:', e);
-    renderModalFallback(jobName);
-  }
 }
 
 // 직업백과 API
