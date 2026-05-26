@@ -550,9 +550,9 @@ function renderGap(myArr, recJob) {
   const gapEl = $('gap-list');
   let html = `
     <div class="gap-legend">
-      <span class="gap-leg-item"><span class="gap-leg-dot" style="background:#1D9E75;opacity:.35"></span>추천 직업 평균</span>
-      ${selectedJob ? `<span class="gap-leg-item"><span class="gap-leg-dot" style="background:#D85A30;opacity:.45"></span>${selectedJob.n} 평균</span>` : ''}
-      <span class="gap-leg-item"><span class="gap-leg-dot" style="background:#1D9E75"></span>나의 역량</span>
+      <span class="gap-leg-item"><span class="gap-leg-dot" style="background:#5DCAA5"></span>추천 직업 평균</span>
+      ${selectedJob ? `<span class="gap-leg-item"><span class="gap-leg-dot" style="background:#F4A0A0"></span>${selectedJob.n} 평균</span>` : ''}
+      <span class="gap-leg-item"><span class="gap-leg-dot" style="background:#6BAEE8"></span>나의 역량</span>
     </div>`;
 
   COMPS.forEach((comp, i) => {
@@ -573,7 +573,7 @@ function renderGap(myArr, recJob) {
       const dv = selectedJob.s[i];
       const pD = Math.round(dv / 5 * 100);
       desiredBar = `<div class="bar-track" title="${selectedJob.n}: ${dv}점">
-        <div class="bar-fill" style="width:${pD}%;background:#D85A30;opacity:.45"></div>
+        <div class="bar-fill" style="width:${pD}%;background:#F4A0A0"></div>
       </div>`;
     }
 
@@ -582,11 +582,11 @@ function renderGap(myArr, recJob) {
         <span class="gap-label">${comp.label}</span>
         <div class="gap-bars">
           <div class="bar-track" title="추천 직업 평균: ${jobVal}점">
-            <div class="bar-fill" style="width:${pJob}%;background:${comp.color};opacity:.35"></div>
+            <div class="bar-fill" style="width:${pJob}%;background:#5DCAA5"></div>
           </div>
           ${desiredBar}
           <div class="bar-track" title="나의 역량: ${me}점">
-            <div class="bar-fill" style="width:${pMe}%;background:${comp.color}"></div>
+            <div class="bar-fill" style="width:${pMe}%;background:#6BAEE8"></div>
           </div>
         </div>
         <div class="gap-vals">${me}<br><span style="color:${comp.color};opacity:.6">${jobVal}</span></div>
