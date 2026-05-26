@@ -678,3 +678,19 @@ h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-botto
   text-decoration: none; transition: all .15s;
 }
 .modal-link-btn:hover { background: var(--teal-deep); }
+
+/* ── 역방향 문항 태그 ─────────────────────────────────── */
+.q-reverse-tag {
+  display: inline-block; font-size: 10px;
+  background: #FAEEDA; color: #BA7517;
+  padding: 1px 6px; border-radius: 10px;
+  margin-left: 5px; font-weight: 500; vertical-align: middle;
+}
+
+/* ── AI 배지 ────────────────────────────────────────── */
+.modal-ai-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--purple-light); color: var(--purple);
+  font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 20px; margin-bottom: 1rem;
+}
