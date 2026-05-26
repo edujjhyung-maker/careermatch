@@ -791,11 +791,11 @@ function openJobModal(jobName) {
           </p>
         </div>
         <div class="modal-footer">
-          <a href="https://www.career.go.kr/cnet/front/web/job/catJobView.do?SEQ=0&jobGbn=job&keyword=${encodeURIComponent(jobName)}"
+          <a href="https://www.career.go.kr/cloud/w/search/intro?text=${encodeURIComponent(jobName)}"
              target="_blank" rel="noopener" class="modal-link-btn" style="margin-right:8px">
-            커리어넷 직업 정보 →
+            커리어넷 직업 검색 →
           </a>
-          <a href="https://www.career.go.kr/cnet/front/web/job/catJobView.do?SEQ=0&jobGbn=job&keyword=${encodeURIComponent(jobName)}"
+          <a href="https://www.career.go.kr/cnet/front/base/job/jobList.do?searchJobNm=${encodeURIComponent(jobName)}"
              target="_blank" rel="noopener" class="modal-link-btn" style="background:var(--blue)">
             직업백과 검색 →
           </a>
