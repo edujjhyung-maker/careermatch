@@ -244,7 +244,7 @@ function goStep(n) {
 
 // ── 진행도 바 ────────────────────────────────────────────────────────
 function renderProgressBar() {
-  const total = COMPS.length * 5;
+  const total = COMPS.reduce((s, c) => s + c.qs.length, 0);
   const done = Object.keys(answers).length;
   const pct = Math.round(done / total * 100);
 
@@ -298,11 +298,9 @@ function renderQuestions() {
       ).join('');
 
       const qText = typeof q === 'object' ? q.q : q;
-      const reverseTag = (typeof q === 'object' && q.r)
-        ? `<span class="q-reverse-tag">역방향</span>` : '';
 
       item.innerHTML = `
-        <div class="q-text"><span class="q-num">${qNum}.</span>${qText}${reverseTag}</div>
+        <div class="q-text"><span class="q-num">${qNum}.</span>${qText}</div>
         <div class="rating-row">
           <span class="rating-label">매우 낮음</span>
           <div class="stars">${stars}</div>
