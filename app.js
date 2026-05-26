@@ -484,9 +484,9 @@ function renderRadar(myArr, recJob, scores) {
     {
       label: '나의 역량',
       data: myArr,
-      borderColor: '#1D9E75',
-      backgroundColor: 'rgba(29,158,117,0.12)',
-      pointBackgroundColor: '#1D9E75',
+      borderColor: '#6BAEE8',
+      backgroundColor: 'rgba(107,174,232,0.15)',
+      pointBackgroundColor: '#6BAEE8',
       borderWidth: 2.5,
       pointRadius: 5,
       pointHoverRadius: 7
@@ -494,9 +494,9 @@ function renderRadar(myArr, recJob, scores) {
     {
       label: `${recJob.n} 평균`,
       data: recScores,
-      borderColor: '#185FA5',
-      backgroundColor: 'rgba(24,95,165,0.08)',
-      pointBackgroundColor: '#185FA5',
+      borderColor: '#5DCAA5',
+      backgroundColor: 'rgba(93,202,165,0.12)',
+      pointBackgroundColor: '#5DCAA5',
       borderWidth: 2,
       pointRadius: 4,
       borderDash: [6, 3]
@@ -506,9 +506,9 @@ function renderRadar(myArr, recJob, scores) {
     datasets.push({
       label: `${selectedJob.n} 평균`,
       data: jobScores(selectedJob),
-      borderColor: '#D85A30',
-      backgroundColor: 'rgba(216,90,48,0.08)',
-      pointBackgroundColor: '#D85A30',
+      borderColor: '#F4A0A0',
+      backgroundColor: 'rgba(244,160,160,0.12)',
+      pointBackgroundColor: '#F4A0A0',
       borderWidth: 2,
       pointRadius: 4,
       borderDash: [3, 3]
