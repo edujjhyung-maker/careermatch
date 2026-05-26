@@ -234,6 +234,14 @@ const calcAllScores = () => {
 };
 const scoresArr = (sc) => COMPS.map(c => sc[c.id]);
 
+// KNOW 직업 데이터 순서: [l(리더십), a(분석적사고), ac(성취/노력), r(책임성), i(혁신), re(신뢰성)]
+const KNOW_IDX = { l:0, a:1, ac:2, r:3, i:4, re:5 };
+
+// COMPS 순서에 맞게 직업 점수 배열 변환
+function jobScores(job) {
+  return COMPS.map(c => job.s[KNOW_IDX[c.id]]);
+}
+
 // ── 단계 이동 ────────────────────────────────────────────────────────
 function goStep(n) {
   document.querySelectorAll('.step').forEach((s, i) => s.classList.toggle('active', i === n));
@@ -406,7 +414,8 @@ function findBestJob(scores) {
   const myArr = scoresArr(scores);
   let best = null, bestDiff = Infinity;
   JOBS.forEach(job => {
-    const diff = job.s.reduce((sum, v, i) => sum + Math.abs(v - myArr[i]), 0);
+    const jArr = jobScores(job);
+    const diff = jArr.reduce((sum, v, i) => sum + Math.abs(v - myArr[i]), 0);
     if (diff < bestDiff) { bestDiff = diff; best = { ...job, diff: +diff.toFixed(2) }; }
   });
   return best;
@@ -456,8 +465,9 @@ function renderResult() {
   renderRadar(myArr, recJob, scores);
   renderGap(myArr, recJob);
   // 약한 역량 ID 추출 (지도 자동 필터용)
+  const recScoresR = jobScores(recJob);
   const weakCompIds = COMPS
-    .filter((c, i) => myArr[i] - recJob.s[i] < -0.3)
+    .filter((c, i) => myArr[i] - recScoresR[i] < -0.3)
     .map(c => c.id);
   window._lastWeakComps = weakCompIds;
   window._lastMyArr = myArr;
@@ -469,6 +479,7 @@ function renderResult() {
 // ── 레이더 차트 ──────────────────────────────────────────────────────
 function renderRadar(myArr, recJob, scores) {
   const labels = COMPS.map(c => c.label);
+  const recScores = jobScores(recJob);
   const datasets = [
     {
       label: '나의 역량',
@@ -482,7 +493,7 @@ function renderRadar(myArr, recJob, scores) {
     },
     {
       label: `${recJob.n} 평균`,
-      data: recJob.s,
+      data: recScores,
       borderColor: '#185FA5',
       backgroundColor: 'rgba(24,95,165,0.08)',
       pointBackgroundColor: '#185FA5',
@@ -494,7 +505,7 @@ function renderRadar(myArr, recJob, scores) {
   if (selectedJob) {
     datasets.push({
       label: `${selectedJob.n} 평균`,
-      data: selectedJob.s,
+      data: jobScores(selectedJob),
       borderColor: '#D85A30',
       backgroundColor: 'rgba(216,90,48,0.08)',
       pointBackgroundColor: '#D85A30',
@@ -535,6 +546,7 @@ function renderRadar(myArr, recJob, scores) {
 
 // ── GAP 분석 ─────────────────────────────────────────────────────────
 function renderGap(myArr, recJob) {
+  const recScores = jobScores(recJob);
   const gapEl = $('gap-list');
   let html = `
     <div class="gap-legend">
@@ -545,7 +557,7 @@ function renderGap(myArr, recJob) {
 
   COMPS.forEach((comp, i) => {
     const me = myArr[i];
-    const jobVal = recJob.s[i];
+    const jobVal = recScores[i];
     const gap = +(me - jobVal).toFixed(2);
     const pMe = Math.round(me / 5 * 100);
     const pJob = Math.round(jobVal / 5 * 100);
@@ -589,9 +601,10 @@ function renderGap(myArr, recJob) {
 function renderPrograms(myArr, recJob) {
   // ── 1. 약한 역량 추출 (GAP 기준) ──────────────────────────────────
   const compIds = COMPS.map(c => c.id);
+  const recScoresP = jobScores(recJob);
   const gapArr = COMPS.map((c, i) => ({
     id: c.id, label: c.label, color: c.color,
-    gap: myArr[i] - recJob.s[i]
+    gap: myArr[i] - recScoresP[i]
   }));
   const weakIds = gapArr
     .filter(g => g.gap < -0.3)
@@ -790,15 +803,27 @@ function openJobModal(jobName) {
             하는 일, 필요 교육·자격, 임금, 전망 등 상세 정보는 커리어넷에서 확인할 수 있어요.
           </p>
         </div>
-        <div class="modal-footer">
-          <a href="https://www.career.go.kr/cloud/w/search/intro?text=${encodeURIComponent(jobName)}"
-             target="_blank" rel="noopener" class="modal-link-btn" style="margin-right:8px">
-            커리어넷 직업 검색 →
-          </a>
-          <a href="https://www.career.go.kr/cnet/front/base/job/jobList.do?searchJobNm=${encodeURIComponent(jobName)}"
-             target="_blank" rel="noopener" class="modal-link-btn" style="background:var(--blue)">
-            직업백과 검색 →
-          </a>
+        <div class="modal-footer" style="display:flex;flex-direction:column;gap:10px">
+          <p style="font-size:12px;color:var(--text-hint);text-align:center">
+            아래 버튼으로 직업 정보를 검색하세요
+          </p>
+          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+            <a href="https://www.career.go.kr/cnet/front/base/job/jobList.do"
+               target="_blank" rel="noopener" class="modal-link-btn">
+              커리어넷 직업백과 →
+            </a>
+            <a href="https://search.naver.com/search.naver?query=${encodeURIComponent(jobName + ' 직업정보 커리어넷')}"
+               target="_blank" rel="noopener" class="modal-link-btn" style="background:var(--blue)">
+              네이버 검색 →
+            </a>
+            <a href="https://www.google.com/search?q=${encodeURIComponent(jobName + ' 직업정보 career.go.kr')}"
+               target="_blank" rel="noopener" class="modal-link-btn" style="background:#888780">
+              구글 검색 →
+            </a>
+          </div>
+          <p style="font-size:11px;color:var(--text-hint);text-align:center">
+            커리어넷 직업백과 접속 후 상단 검색창에 <strong>${jobName}</strong> 입력
+          </p>
         </div>
       </div>
     </div>`;
