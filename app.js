@@ -769,13 +769,14 @@ function openJobModal(jobName) {
   modal.className = 'modal-overlay';
 
   // 역량 프로파일 바 생성
-  const compLabels = ['리더십', '분석적사고', '성취/노력', '책임성·진취성', '혁신', '신뢰성'];
+  // KNOW 데이터 순서(l,a,ac,r,i,re)에 맞게 2022 교육과정 역량명으로 표시
+  const compLabels = ['협력적 소통 역량', '지식정보처리 역량', '자기관리 역량', '공동체 역량', '창의적 사고 역량', '심미적 감성 역량'];
   const compColors = ['#1D9E75','#185FA5','#BA7517','#D85A30','#534AB7','#888780'];
   let profileHtml = '';
   if (jobData) {
     profileHtml = `
       <div class="modal-section">
-        <div class="modal-tag">📊 KNOW 재직자 역량 프로파일</div>
+        <div class="modal-tag">📊 이 직업을 가진 사람들의 역량 평균</div>
         <div class="modal-profile">
           ${jobData.s.map((v, i) => `
             <div class="mp-row">
