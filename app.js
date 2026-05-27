@@ -548,10 +548,28 @@ function renderRadar(myArr, recJob, scores) {
 function renderGap(myArr, recJob) {
   const recScores = jobScores(recJob);
   const gapEl = $('gap-list');
-  let html = `
+
+  // 강점·부족 역량 요약 문장 (희망직업 있으면 희망직업 기준, 없으면 추천직업 기준)
+  const comparedJob = selectedJob || recJob;
+  const comparedScores = selectedJob ? jobScores(selectedJob) : recScores;
+  const strongComps = COMPS.filter((c, i) => myArr[i] - comparedScores[i] > 0.5).map(c => c.label);
+  const weakComps   = COMPS.filter((c, i) => myArr[i] - comparedScores[i] < -0.5).map(c => c.label);
+
+  let summaryHtml = '';
+  if (strongComps.length > 0) {
+    summaryHtml += '<div class="gap-summary strong">✅ <strong>' + comparedJob.n + '</strong>과(와) 비교했을 때 <strong>' + strongComps.join(', ') + '</strong>에 강점이 있습니다.</div>';
+  }
+  if (weakComps.length > 0) {
+    summaryHtml += '<div class="gap-summary weak">📌 <strong>' + comparedJob.n + '</strong>을(를) 위해 <strong>' + weakComps.join(', ') + '</strong> 향상이 필요합니다.</div>';
+  }
+  if (!strongComps.length && !weakComps.length) {
+    summaryHtml += '<div class="gap-summary neutral">🎯 <strong>' + comparedJob.n + '</strong>과(와) 비교했을 때 전반적으로 역량이 적정 수준입니다.</div>';
+  }
+
+  let html = summaryHtml + `
     <div class="gap-legend">
       <span class="gap-leg-item"><span class="gap-leg-dot" style="background:#5DCAA5"></span>추천 직업 평균</span>
-      ${selectedJob ? `<span class="gap-leg-item"><span class="gap-leg-dot" style="background:#F4A0A0"></span>${selectedJob.n} 평균</span>` : ''}
+      ${selectedJob ? '<span class="gap-leg-item"><span class="gap-leg-dot" style="background:#F4A0A0"></span>' + selectedJob.n + ' 평균</span>' : ''}
       <span class="gap-leg-item"><span class="gap-leg-dot" style="background:#6BAEE8"></span>나의 역량</span>
     </div>`;
 
