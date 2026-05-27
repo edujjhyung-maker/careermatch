@@ -724,3 +724,35 @@ h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-botto
   color: var(--text-secondary);
   border: 0.5px solid var(--border-light);
 }
+
+/* ── 추천/희망 직업 좌우 비교 레이아웃 ───────────────────── */
+.rh-compare {
+  display: flex; align-items: center; gap: 12px;
+  padding: 1.25rem 1.5rem;
+}
+.rh-job-card {
+  flex: 1; text-align: center;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+}
+.rh-rec { background: rgba(93,202,165,0.12); border: 1.5px solid #5DCAA5; }
+.rh-wish { background: rgba(244,160,160,0.12); border: 1.5px solid #F4A0A0; }
+.rh-job-label {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .3px; text-transform: uppercase;
+}
+.rh-job-name {
+  font-size: 20px; font-weight: 700; line-height: 1.3;
+}
+.rh-compare-vs {
+  font-size: 18px; font-weight: 800;
+  color: var(--text-hint); flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .rh-compare { flex-direction: column; padding: 1rem; }
+  .rh-compare-vs { transform: rotate(90deg); }
+  .rh-job-name { font-size: 17px; }
+}
