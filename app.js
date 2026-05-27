@@ -444,23 +444,28 @@ function renderResult() {
   const myArr = scoresArr(scores);
 
   // 히어로
-  $('result-hero').innerHTML = `
+  $('result-hero').innerHTML = selectedJob ? `
+    <div class="rh-compare">
+      <div class="rh-job-card rh-rec">
+        <div class="rh-job-label" style="color:#5DCAA5">역량 기반 추천</div>
+        <div class="rh-job-name" style="color:#085041">${recJob.n}</div>
+        <button class="rh-detail-btn" style="border-color:#5DCAA5;color:#085041" onclick="openJobModal('${recJob.n.replace(/'/g,"\'")}')">🔍 상세 정보</button>
+      </div>
+      <div class="rh-compare-vs">VS</div>
+      <div class="rh-job-card rh-wish">
+        <div class="rh-job-label" style="color:#E07070">희망 직업</div>
+        <div class="rh-job-name" style="color:#9B2335">${selectedJob.n}</div>
+        <button class="rh-detail-btn secondary" style="border-color:#F4A0A0;color:#9B2335" onclick="openJobModal('${selectedJob.n.replace(/'/g,"\'")}')">🔍 상세 정보</button>
+      </div>
+    </div>
+  ` : `
     <div class="rh-label">역량 기반 추천 직업</div>
     <div class="rh-name">${recJob.n}</div>
-    ${selectedJob
-      ? `<div class="rh-sub">희망 직업 <strong>${selectedJob.n}</strong>과(와) 함께 비교합니다</div>`
-      : `<div class="rh-sub">역량 유사도 차이값 <strong>${recJob.diff}</strong></div>`
-    }
+    <div class="rh-sub">역량 유사도 차이값 <strong>${recJob.diff}</strong></div>
     <div class="rh-btn-row">
-      <button class="rh-detail-btn" onclick="openJobModal('${recJob.n.replace(/'/g,"\\'")}')">
-        🔍 추천 직업 상세 정보
-      </button>
-      ${selectedJob
-        ? `<button class="rh-detail-btn secondary" onclick="openJobModal('${(selectedJob.n).replace(/'/g,"\\'")}')">
-            🔍 ${selectedJob.n} 상세 정보
-          </button>`
-        : ''}
-    </div>`;
+      <button class="rh-detail-btn" onclick="openJobModal('${recJob.n.replace(/'/g,"\'")}')">🔍 추천 직업 상세 정보</button>
+    </div>
+  `;
 
   renderRadar(myArr, recJob, scores);
   renderGap(myArr, recJob);
