@@ -702,3 +702,25 @@ h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-botto
 .mp-bar-wrap { flex: 1; height: 8px; background: var(--border-light); border-radius: 4px; overflow: hidden; }
 .mp-bar { height: 8px; border-radius: 4px; transition: width .5s ease; }
 .mp-val { font-size: 12px; font-weight: 600; color: var(--text-primary); width: 28px; text-align: right; flex-shrink: 0; }
+
+/* ── GAP 요약 문장 ────────────────────────────────────── */
+.gap-summary {
+  padding: 10px 14px; border-radius: var(--radius-md);
+  font-size: 13px; line-height: 1.6;
+  margin-bottom: 8px;
+}
+.gap-summary.strong {
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  border: 0.5px solid var(--teal-mid);
+}
+.gap-summary.weak {
+  background: var(--amber-light);
+  color: var(--amber);
+  border: 0.5px solid rgba(186,117,23,0.3);
+}
+.gap-summary.neutral {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 0.5px solid var(--border-light);
+}
